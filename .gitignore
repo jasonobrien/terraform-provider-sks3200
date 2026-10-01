@@ -1,0 +1,4 @@
+/terraform-provider-sks3200
+.terraform/
+.terraform.lock.hcl
+*.tfstate*

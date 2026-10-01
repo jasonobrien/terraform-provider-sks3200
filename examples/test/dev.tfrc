@@ -1,0 +1,8 @@
+# Use the locally built provider (go build -o terraform-provider-sks3200 .
+# in the repo root) instead of the registry.
+provider_installation {
+  dev_overrides {
+    "jasonobrien/sks3200" = "/home/jason/code/terraform-provider-sks3200"
+  }
+  direct {}
+}
