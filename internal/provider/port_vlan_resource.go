@@ -61,6 +61,7 @@ func (r *portVLANResource) Schema(_ context.Context, _ resource.SchemaRequest, r
 			"Destroying it resets the port to PVID 1, all frames.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
+				Description:   "The port number.",
 				Computed:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 			},
@@ -71,8 +72,9 @@ func (r *portVLANResource) Schema(_ context.Context, _ resource.SchemaRequest, r
 				Validators:    []validator.Int64{int64validator.AtLeast(1)},
 			},
 			"pvid": schema.Int64Attribute{
-				Required:   true,
-				Validators: []validator.Int64{int64validator.Between(1, 4094)},
+				Description: "VLAN assigned to untagged frames arriving on the port. The port must be a member of it.",
+				Required:    true,
+				Validators:  []validator.Int64{int64validator.Between(1, 4094)},
 			},
 			"accepted_frames": schema.StringAttribute{
 				Description: `One of "all" (default), "tagged" or "untagged".`,

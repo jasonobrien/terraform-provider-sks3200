@@ -1,0 +1,1 @@
+terraform import sks3200_ip_address_settings.this network

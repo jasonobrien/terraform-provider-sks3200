@@ -43,17 +43,31 @@ func (r *ipSettingsResource) Schema(_ context.Context, _ resource.SchemaRequest,
 			"Changing the address moves the switch away from the provider's url; update url to match.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
+				Description:   `Always "network".`,
 				Computed:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 			},
 			"dhcp_enabled": schema.BoolAttribute{
-				Optional: true,
-				Computed: true,
-				Default:  booldefault.StaticBool(false),
+				Description: "Get the address by DHCP; ip_address, netmask and gateway are then not sent to the switch. Defaults to false.",
+				Optional:    true,
+				Computed:    true,
+				Default:     booldefault.StaticBool(false),
 			},
-			"ip_address": schema.StringAttribute{Optional: true, Computed: true},
-			"netmask":    schema.StringAttribute{Optional: true, Computed: true},
-			"gateway":    schema.StringAttribute{Optional: true, Computed: true},
+			"ip_address": schema.StringAttribute{
+				Description: "IPv4 address, e.g. 192.168.10.12. Keeps the switch's current value if unset.",
+				Optional:    true,
+				Computed:    true,
+			},
+			"netmask": schema.StringAttribute{
+				Description: "Dotted-quad netmask, e.g. 255.255.255.0. Keeps the switch's current value if unset.",
+				Optional:    true,
+				Computed:    true,
+			},
+			"gateway": schema.StringAttribute{
+				Description: "Default gateway. Keeps the switch's current value if unset.",
+				Optional:    true,
+				Computed:    true,
+			},
 		},
 	}
 }

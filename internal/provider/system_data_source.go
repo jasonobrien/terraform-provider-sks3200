@@ -32,11 +32,11 @@ func (d *systemDataSource) Schema(_ context.Context, _ datasource.SchemaRequest,
 	resp.Schema = schema.Schema{
 		Description: "Switch identity and firmware.",
 		Attributes: map[string]schema.Attribute{
-			"model":       schema.StringAttribute{Computed: true},
-			"firmware":    schema.StringAttribute{Computed: true},
-			"hardware":    schema.StringAttribute{Computed: true},
-			"mac_address": schema.StringAttribute{Computed: true},
-			"ip_address":  schema.StringAttribute{Computed: true},
+			"model":       schema.StringAttribute{Computed: true, Description: "Model name, e.g. SKS3200-8E2X."},
+			"firmware":    schema.StringAttribute{Computed: true, Description: "Firmware version, e.g. 2.0.0.3."},
+			"hardware":    schema.StringAttribute{Computed: true, Description: "Hardware revision."},
+			"mac_address": schema.StringAttribute{Computed: true, Description: "Management MAC address."},
+			"ip_address":  schema.StringAttribute{Computed: true, Description: "Current management IPv4 address."},
 		},
 	}
 }

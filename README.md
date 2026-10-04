@@ -51,7 +51,15 @@ sks3200_vlan_8021q.default 1`) rather than creating it.
 
 ## Install
 
-Not published; `terraform init` picks it up from Terraform's implicit local
+```hcl
+terraform {
+  required_providers {
+    sks3200 = { source = "jasonobrien/sks3200" }
+  }
+}
+```
+
+To test an unreleased build, install it into Terraform's implicit local
 mirror. Bump `V` for each change, or `init` fails on the lock file checksum.
 
 ```sh
@@ -64,6 +72,12 @@ mkdir -p $D && go build -ldflags "-X main.version=$V" -o $D/terraform-provider-s
 
 ```sh
 go test ./...
+go generate ./...   # docs/ from schema descriptions, examples/ and templates/
 go build -o terraform-provider-sks3200 .
 cd examples/test && SKS3200_PASSWORD=admin TF_CLI_CONFIG_FILE=$PWD/dev.tfrc terraform apply
 ```
+
+## Releasing
+
+Push a `vX.Y.Z` tag to GitHub; `.github/workflows/release.yml` builds and
+signs the release with GoReleaser, and both registries pick it up from there.

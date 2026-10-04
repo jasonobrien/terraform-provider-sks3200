@@ -68,19 +68,22 @@ func (r *vlanResource) Schema(_ context.Context, _ resource.SchemaRequest, resp 
 			"VLAN 1 can't be deleted: import it, and destroying it only drops it from state.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
+				Description:   "The VLAN ID.",
 				Computed:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 			},
 			"vlan_id": schema.Int64Attribute{
+				Description:   "802.1Q VLAN ID, 1-4094.",
 				Required:      true,
 				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
 				Validators:    []validator.Int64{int64validator.Between(1, 4094)},
 			},
 			"name": schema.StringAttribute{
-				Optional:   true,
-				Computed:   true,
-				Default:    stringdefault.StaticString(""),
-				Validators: []validator.String{stringvalidator.LengthAtMost(16)},
+				Description: "Up to 16 characters.",
+				Optional:    true,
+				Computed:    true,
+				Default:     stringdefault.StaticString(""),
+				Validators:  []validator.String{stringvalidator.LengthAtMost(16)},
 			},
 			"untagged_ports": untagged,
 			"tagged_ports":   tagged,
